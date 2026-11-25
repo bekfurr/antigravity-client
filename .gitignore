@@ -1,0 +1,64 @@
+# Dependencies
+node_modules/
+
+# Rust & Cargo build/debug outputs
+src-tauri/target/
+**/*.rs.bk
+*.pdb
+
+# Tauri generated schemas
+src-tauri/gen/schemas/
+
+# Built Windows & Android distributables / binaries
+installer/output/
+dist/
+out/
+*.exe
+*.msi
+*.msix
+*.apk
+*.aab
+*.ap_
+*.so
+*.dll
+*.dylib
+*.lib
+*.exp
+
+# Debug outputs & logs
+**/debug/
+*.log
+*.tmp
+
+# Android Gradle, Kotlin, NDK & Tauri generated build artifacts
+src-tauri/gen/android/**/.gradle/
+src-tauri/gen/android/**/.kotlin/
+src-tauri/gen/android/.tauri/
+src-tauri/gen/android/.idea/
+src-tauri/gen/android/.cxx/
+src-tauri/gen/android/.externalNativeBuild/
+src-tauri/gen/android/**/build/
+src-tauri/gen/android/app/src/main/jniLibs/
+src-tauri/gen/android/app/src/main/assets/
+src-tauri/gen/android/app/src/main/java/**/generated/
+src-tauri/gen/android/local.properties
+src-tauri/gen/android/tauri.settings.gradle
+src-tauri/gen/android/app/tauri.build.gradle.kts
+src-tauri/gen/android/app/tauri.properties
+src-tauri/gen/android/app/proguard-tauri.pro
+*.iml
+
+# Signing secrets & keystores (never commit)
+*.keystore
+*.jks
+key.properties
+keystore.properties
+.env
+.env.*
+
+# OS & IDE metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

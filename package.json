@@ -1,0 +1,17 @@
+{
+  "name": "antigravity-client",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Lightweight cross-platform Rust client for Google Antigravity Remote Control (Windows & Android)",
+  "scripts": {
+    "tauri": "tauri",
+    "dev": "tauri dev",
+    "build:windows": "tauri build",
+    "android:init": "tauri android init",
+    "android:dev": "tauri android dev",
+    "android:build": "tauri android build --apk"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.10.0"
+  }
+}

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Antigravity Client — Settings & Profiles</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0f1c;
+      --card: #121829;
+      --card-hover: #182138;
+      --border: #24304d;
+      --text: #eef2ff;
+      --muted: #92a2c4;
+      --accent: #38bdf8;
+      --accent-strong: #0ea5e9;
+      --danger: #f87171;
+      --success: #34d399;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 20px;
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    header p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.14);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+
+    section h2 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    section .desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .row + .row {
+      margin-top: 8px;
+    }
+
+    input[type="text"],
+    input[type="url"] {
+      flex: 1;
+      background: #0b1020;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      padding: 9px 11px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+    }
+
+    button {
+      background: #1c2640;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 13px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    button:hover {
+      background: #253255;
+      border-color: #364975;
+    }
+
+    button.primary {
+      background: var(--accent-strong);
+      border-color: var(--accent);
+      color: #041320;
+      font-weight: 600;
+    }
+
+    button.primary:hover {
+      background: var(--accent);
+    }
+
+    button.danger {
+      color: var(--danger);
+      border-color: rgba(248, 113, 113, 0.35);
+      background: rgba(248, 113, 113, 0.08);
+    }
+
+    button.danger:hover {
+      background: rgba(248, 113, 113, 0.18);
+    }
+
+    button.small {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 9px;
+      background: #0d1324;
+      border: 1px solid #1e2944;
+    }
+
+    .item-meta {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .item-title {
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .item-sub {
+      font-size: 11.5px;
+      color: var(--muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .pill {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(52, 211, 153, 0.14);
+      color: var(--success);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+    }
+
+    .toggle-row label {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .toggle-row small {
+      display: block;
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .hint {
+      margin-top: 8px;
+      font-size: 11.5px;
+      color: var(--muted);
+      word-break: break-all;
+    }
+
+    .empty {
+      font-size: 12px;
+      color: var(--muted);
+      padding: 8px 2px;
+    }
+
+    #status {
+      position: fixed;
+      bottom: 14px;
+      right: 16px;
+      padding: 9px 14px;
+      border-radius: 9px;
+      background: #17233f;
+      border: 1px solid var(--accent);
+      color: var(--text);
+      font-size: 12.5px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    #status.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #status.error {
+      border-color: var(--danger);
+      color: #fecaca;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Antigravity Client</h1>
+      <p id="current-url-display">https://antigravity.google.com</p>
+    </div>
+    <span class="badge" id="platform-badge">Desktop</span>
+  </header>
+
+  <div class="stack">
+    <!-- Quick Connect -->
+    <section id="section-connect">
+      <h2>Quick Connect</h2>
+      <p class="desc">Jump straight to antigravity.google.com or paste a Remote Control instance link (/r/&lt;instance-id&gt;).</p>
+      <div class="row">
+        <input id="connect-url" type="url" placeholder="https://antigravity.google.com/r/your-instance-id" />
+        <button class="primary" id="btn-connect">Connect</button>
+        <button id="btn-go-home">Home</button>
+      </div>
+    </section>
+
+    <!-- Saved Remote Instances -->
+    <section id="section-bookmarks">
+      <h2>Saved Remote Instances</h2>
+      <p class="desc">Bookmark your frequent workstations or servers for one-click access.</p>
+      <div class="row">
+        <input id="bm-name" type="text" placeholder="Machine name (e.g. Office PC)" style="max-width: 190px;" />
+        <input id="bm-url" type="url" placeholder="https://antigravity.google.com/r/..." />
+        <button id="btn-add-bm">Add</button>
+      </div>
+      <div class="list" id="bookmarks-list"></div>
+    </section>
+
+    <!-- Account Profiles (Windows/Desktop) -->
+    <section id="section-profiles">
+      <h2>Account Profiles</h2>
+      <p class="desc">Each profile keeps its own persistent Google account session and cookies on disk so you stay signed in.</p>
+      <div class="row">
+        <input id="profile-name" type="text" placeholder="New profile name (e.g. Work, Personal)" />
+        <button id="btn-add-profile">Create Profile</button>
+      </div>
+      <div class="list" id="profiles-list"></div>
+      <p class="hint" id="profile-dir-hint"></p>
+    </section>
+
+    <!-- Startup, Tray & Session -->
+    <section id="section-prefs">
+      <h2>Preferences & Session</h2>
+      <p class="desc">Configure startup behavior, system tray, and WebView session settings.</p>
+
+      <div class="row">
+        <input id="default-url" type="url" placeholder="https://antigravity.google.com" />
+        <button id="btn-save-default">Save Startup URL</button>
+      </div>
+
+      <div class="toggle-row" id="tray-setting-row">
+        <div>
+          <label for="close-to-tray">Minimize to system tray on close</label>
+          <small>Keep Antigravity running in the background when you close the window.</small>
+        </div>
+        <input id="close-to-tray" type="checkbox" />
+      </div>
+
+      <div style="margin-top: 10px;">
+        <div class="row">
+          <input id="custom-ua" type="text" placeholder="Optional custom User-Agent (leave blank for native WebView2)" />
+          <button id="btn-save-ua">Save UA</button>
+          <button id="btn-chrome-ua" title="Fill standard Chrome Desktop User-Agent">Chrome Preset</button>
+        </div>
+        <p class="hint">Changing User-Agent takes effect after restarting the app.</p>
+      </div>
+
+      <div class="row" style="margin-top: 14px; justify-content: space-between;">
+        <button id="btn-open-browser">Open Current Page in Browser</button>
+        <div class="row">
+          <button id="btn-restart">Restart App</button>
+          <button class="danger" id="btn-clear-session">Sign Out / Clear Session</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="status"></div>
+
+  <script>
+    const invoke = window.__TAURI__.core.invoke;
+    const CHROME_DESKTOP_UA =
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36";
+
+    let snapshot = null;
+    let toastTimer = null;
+
+    function notify(msg, isError = false) {
+      const el = document.getElementById("status");
+      el.textContent = msg;
+      el.classList.toggle("error", isError);
+      el.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove("show"), 2800);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    window.focusSection = function (section) {
+      if (section === "connect") {
+        const input = document.getElementById("connect-url");
+        input.focus();
+        input.select();
+      }
+    };
+
+    function render() {
+      if (!snapshot) return;
+      const cfg = snapshot.config;
+
+      document.getElementById("current-url-display").textContent = snapshot.current_url;
+      document.getElementById("platform-badge").textContent = snapshot.platform;
+      document.getElementById("default-url").value = cfg.default_url || "https://antigravity.google.com";
+      document.getElementById("close-to-tray").checked = Boolean(cfg.close_to_tray);
+      document.getElementById("custom-ua").value = cfg.custom_user_agent || "";
+
+      document.getElementById("section-profiles").classList.toggle("hidden", !snapshot.supports_profiles);
+      document.getElementById("tray-setting-row").classList.toggle("hidden", !snapshot.supports_tray);
+
+      if (snapshot.data_directory) {
+        document.getElementById("profile-dir-hint").textContent =
+          "Active profile storage: " + snapshot.data_directory;
+      }
+
+      // Render bookmarks
+      const bmList = document.getElementById("bookmarks-list");
+      if (!cfg.bookmarks || cfg.bookmarks.length === 0) {
+        bmList.innerHTML = '<div class="empty">No saved remote instances yet.</div>';
+      } else {
+        bmList.innerHTML = cfg.bookmarks
+          .map(
+            (b) => `
+            <div class="item">
+              <div class="item-meta">
+                <div class="item-title">${escapeHtml(b.name)}</div>
+                <div class="item-sub">${escapeHtml(b.url)}</div>
+              </div>
+              <div class="row">
+                <button class="small primary" data-open-url="${escapeHtml(b.url)}">Open</button>
+                <button class="small danger" data-remove-bm="${escapeHtml(b.id)}">Remove</button>
+              </div>
+            </div>`
+          )
+          .join("");
+      }
+
+      // Render profiles
+      const profList = document.getElementById("profiles-list");
+      profList.innerHTML = (cfg.profiles || [])
+        .map((p) => {
+          const isActive = p.id === cfg.active_profile;
+          const canDelete = !isActive && p.id !== "default";
+          return `
+            <div class="item">
+              <div class="item-meta">
+                <div class="item-title">
+                  ${escapeHtml(p.name)}
+                  ${isActive ? '<span class="pill">Active</span>' : ""}
+                </div>
+                <div class="item-sub">Profile ID: ${escapeHtml(p.id)}</div>
+              </div>
+              <div class="row">
+                ${
+                  isActive
+                    ? ""
+                    : `<button class="small primary" data-switch-profile="${escapeHtml(p.id)}">Switch</button>`
+                }
+                ${
+                  canDelete
+                    ? `<button class="small danger" data-delete-profile="${escapeHtml(p.id)}">Delete</button>`
+                    : ""
+                }
+              </div>
+            </div>`;
+        })
+        .join("");
+    }
+
+    async function refresh() {
+      try {
+        snapshot = await invoke("get_snapshot");
+        render();
+      } catch (err) {
+        notify(String(err), true);
+      }
+    }
+
+    document.getElementById("btn-connect").addEventListener("click", async () => {
+      const url = document.getElementById("connect-url").value.trim();
+      try {
+        const target = await invoke("navigate_main", { url });
+        notify("Connected to " + target);
+        await refresh();
+      } catch (err) {
+        notify(String(err), true);
+      }
+    });
+
+    document.getElementById("connect-url").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") document.getElementById("btn-connect").click();
+    });
+
+    document.getElementById("btn-go-home").addEventListener("click", async () => {
+      try {
+        await invoke("navigate_main", { url: "https://antigravity.google.com" });
+        notify("Returned to antigravity.google.com");
+        await refresh();
+      } catch (err) {
+        notify(String(err), true);
+      }
+    });
+
+    document.getElementById("btn-add-bm").addEventListener("click", async () => {
+      const name = document.getElementById("bm-name").value.trim();
+      const url = document.getElementById("bm-url").value.trim();
+      try {
+        await invoke("add_bookmark", { name, url });
+        document.getElementById("bm-name").value = "";
+        document.getElementById("bm-url").value = "";
+        notify("Remote instance saved");
+        await refresh();
+      } catch (err) {
+        notify(String(err), true);
+      }
+    });
+
+    document.getElementById("bookmarks-list").addEventListener("click", async (e) => {
+      const openUrl = e.target.getAttribute("data-open-url");
+      const removeId = e.target.getAttribute("data-remove-bm");
+      try {
+        if (openUrl) {
+          await invoke("navigate_main", { url: openUrl });
+          notify("Opening instance...");
+        } else if (removeId) {
+          await invoke("remove_bookmark", { id: removeId });
+          notify("Bookmark removed");
+          await refresh();
+        }
+      } catch (err) {
+        notify(String(err), true);
+      }
+    });
+
+    document.getElementById("btn-add-profile").addEventListener("click", async () => {
+      const name = document.getElementById("profile-name").value.trim();
+      try {
+        await invoke("create_profile", { name });
+        document.getElementById("profile-name").value = "";
+        notify("Profile created");
+        await refresh();
+      } catch (err) {
+        notify(String(err), true);
+      }
+    });
+
+    document.getElementById("profiles-list").addEventListener("click", async (e) => {
+      const switchId = e.target.getAttribute("data-switch-profile");
+      const deleteId = e.target.getAttribute("data-delete-profile");
+      try {
+        if (switchId) {
+          notify("Switching profile and restarting...");
+          await invoke("switch_profile", { profileId: switchId });
+        } else if (deleteId) {
+          if (!confirm("Delete this profile and its saved login cookies?")) return;
+          await invoke("delete_profile", { profileId: deleteId });
+          notify("Profile deleted");
+          await refresh();
+        }
+      } catch (err) {
+        notify(String(err), true);
+      }
+    });
+
+    document.getElementById("btn-save-default").addEventListener("click", async () => {
+      const url = document.getElementById("default-url").value.trim();
+      try {
+        await invoke("save_default_url", { url });
+        notify("Default startup URL saved");
+        await refresh();
+      } catch (err) {
+        notify(String(err), true);
+      }
+    });
+
+    document.getElementById("close-to-tray").addEventListener("change", async (e) => {
+      try {
+        await invoke("set_close_to_tray", { enabled: e.target.checked });
+        notify(e.target.checked ? "Close to tray enabled" : "Close to tray disabled");
+      } catch (err) {
+        notify(String(err), true);
+      }
+    });
+
+    document.getElementById("btn-chrome-ua").addEventListener("click", () => {
+      document.getElementById("custom-ua").value = CHROME_DESKTOP_UA;
+    });
+
+    document.getElementById("btn-save-ua").addEventListener("click", async () => {
+      const val = document.getElementById("custom-ua").value.trim();
+      try {
+        await invoke("set_custom_user_agent", { userAgent: val || null });
+        notify("User-Agent saved (restart to apply)");
+        await refresh();
+      } catch (err) {
+        notify(String(err), true);
+      }
+    });
+
+    document.getElementById("btn-open-browser").addEventListener("click", async () => {
+      if (!snapshot) return;
+      try {
+        await invoke("open_in_browser", { url: snapshot.current_url });
+      } catch (err) {
+        notify(String(err), true);
+      }
+    });
+
+    document.getElementById("btn-restart").addEventListener("click", async () => {
+      await invoke("restart_app");
+    });
+
+    document.getElementById("btn-clear-session").addEventListener("click", async () => {
+      if (!confirm("Clear cookies and site data for the active profile? You will need to sign in again.")) {
+        return;
+      }
+      try {
+        await invoke("clear_active_session");
+        notify("Session data cleared");
+      } catch (err) {
+        notify(String(err), true);
+      }
+    });
+
+    refresh().then(() => {
+      if (window.location.hash === "#connect") {
+        window.focusSection("connect");
+      }
+    });
+  </script>
+</body>
+</html>
